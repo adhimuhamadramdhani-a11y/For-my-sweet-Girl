@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pretty Girl 💗</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+*{
+  box-sizing:border-box;
+  font-family:'Comic Neue', cursive;
+}
+
+body{
+  margin:0;
+  background:#ffd6e7;
+  overflow:hidden;
+}
+
+.page{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:none;
+  padding:20px;
+}
+
+.page.active{
+  display:block;
+}
+
+.bg{
+  position:absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.35),
+      rgba(255,255,255,0.35) 12px,
+      rgba(255,182,213,0.35) 12px,
+      rgba(255,182,213,0.35) 24px
+    );
+  z-index:-1;
+}
+
+.center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  text-align:center;
+}
+
+.btn{
+  padding:14px 26px;
+  background:#ff5fa2;
+  color:white;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 6px 0 #e0488c;
+  transition:0.2s;
+}
+
+.btn:active{
+  transform:translateY(4px);
+  box-shadow:0 2px 0 #e0488c;
+}
+
+.typing{
+  white-space:pre-wrap;
+  line-height:1.6;
+  min-height:120px;
+}
+
+.sketch{
+  width:160px;
+  margin:15px auto;
+  display:block;
+}
+
+.bottom-right{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(255,120,180,0.75);
+  backdrop-filter:blur(4px);
+  padding:20px;
+  display:none;
+}
+
+.overlay.active{
+  display:block;
+}
+
+.from-left{
+  animation:slideLeft 0.5s forwards;
+}
+
+.from-right{
+  animation:slideRight 0.5s forwards;
+}
+
+@keyframes slideLeft{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(0)}
+}
+
+@keyframes slideRight{
+  from{transform:translateX(100%)}
+  to{transform:translateX(0)}
+}
+
+.close{
+  position:absolute;
+  top:15px;
+  font-size:26px;
+  cursor:pointer;
+}
+
+.close.right{right:20px}
+.close.left{left:20px}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+  <div class="bg"></div>
+  <div class="center">
+    <div class="sketch">🐱</div>
+    <h1>What i think about my pretty girll</h1>
+    <button class="btn" onclick="go(2)">klik here</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+  <div class="bg"></div>
+  <h2 style="text-align:center">About Her</h2>
+
+  <svg class="sketch" viewBox="0 0 100 100">
+    <circle cx="50" cy="35" r="20" stroke="hotpink" fill="none" stroke-width="3"/>
+    <path d="M30 80 Q50 60 70 80" stroke="hotpink" fill="none" stroke-width="3"/>
+  </svg>
+
+  <div class="typing" id="aboutText"></div>
+
+  <div class="bottom-right">
+    <button class="btn" onclick="go(3)">selanjutnya</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+  <div class="bg"></div>
+  <div class="center">
+    <button class="btn" onclick="openLeft()">APA YANG AKU GAK SUKA DARI KAMU</button>
+    <br><br>
+    <button class="btn" onclick="openRight()">APA YANG KU SUKA DARI KAMU</button>
+  </div>
+
+  <!-- LEFT -->
+  <div class="overlay from-left" id="leftBox">
+    <div class="close right" onclick="closeBox()">✖</div>
+    <div class="typing" id="leftText"></div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="overlay from-right" id="rightBox">
+    <div class="close left" onclick="closeBox()">✖</div>
+    <div class="typing" id="rightText"></div>
+  </div>
+
+  <div class="bottom-right">
+    <button class="btn" onclick="go(4)">selanjutnya</button>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+  <div class="bg"></div>
+  <div class="center">
+    <div style="background:rgba(255,255,255,0.6);padding:22px;border-radius:20px">
+      <h2>INTINYA</h2>
+      <div class="typing" id="finalText"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function go(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+  document.getElementById('p'+n).classList.add('active')
+}
+
+function type(el,text,speed=25){
+  el.innerHTML=''
+  let i=0
+  let t=setInterval(()=>{
+    el.innerHTML+=text[i]
+    i++
+    if(i>=text.length) clearInterval(t)
+  },speed)
+}
+
+const aboutTextFull = `Dia adalah wanita paling cantik, imut, dan sweet yang pernah ku temui. Aku sangat beruntung bisa bertemu dengan dia, karna bagi aku dia itu wanita pertama yang bisa bikin aku mencintainya banget setelah ibu ku. Dia itu orang nya lucu, humoris, aktif, dan dia juga pinter lohh. Tapi kadang kalo ada yg bikin mood nya jelek, dia juga suka tiba² marah-marah, suka tiba² sedih jugaa, walau kadang dia sedih dan marah nya bukan karna aku, tapi tetep aku juga yg kena imbas nya huhu T_T. Tapi gak papa aku tetep sayanggg banget sama dia. Tambahan dikit dia itu jago buat redain emosi atau sedih nya aku. Tapi aku suka sedih, karna kalo dia lagi emosi dan sedih, aku kadang gak bisa apa apa HUHUHU SEDIHH☹️. Pokok nya aku sayang banget sama diaa Love u Wupp🫶🫶`;
+
+const leftFull = `Ini bukan berarti aku gak suka sama kamu yaa. Tapi mungkin aku kesel ama gak suka kalo kamu lakuin
+
+1. Kalo kamu tiba tiba ilang gak ngasih kabar apa apa sama aku, dan nanti pas balik lagi, kamu biasa aja kayak gak terjadi apa apa. Padahal aku nungguin kabar dari kamuuu
+
+2. Ini entah kamu tuh sadar atau enggak. kamu tuu kayak suka tiba tiba gak nganggap aku ada gitu suka luas leos sendiri, tanpa sadar kalo ada aku gitu di samping kamu. Terus juga balik lagi sama kayak poin di awal, kadang kamu tu suka gak ngabarin aku, padahal aku suka banget denger apapun kabar dari kamuu. Aku sediii kalo kamu dah kek gitu
+
+3. Kalo kamu cuek ke aku. Kalo ini banyak kasus nya kayak yg tadi aku bilang di kampus, terus juga kalo lagi makan atau lagi bareng aku. Bisa gakkk aku minta inimah, jangan dulu maen hp gitu, kayak nikmatin dulu Quality Time nyaa. Boleh buka hp tapi buat hal penting aja gituu, atau gak kalo kita berdua juga lagi buka hp. jangan kayak lagi ngobrol tiba tiba scroll terus aku nya di diemin☹️☹️.
+
+Dah mungkin itu aja sedikit keluh kesah aku hehe`;
+
+const rightFull = `Emmm aku bingung nii, soal nya banyak bangettt tapi yg paling utama ini sii.
+
+1. Kalo kamu pegang aku, kayak kamu elus aku kamu peyuk aku, kamu pat pat aku. Pokoknya love lenguage aku tuu physical touch banget. Nah aku paling suka kalo kamu gandeng tangan aku kayak di silang gituu hehe, terus juga kalo kamu peyuk aku di motor hehe (tapi jangan di seringin cubitt ituuuu😠☹️☹️)
+
+2. Kalo kamu ceritain atau gak ngabarin hal apa aja yang kamu lagi lakuin, apalagi di tambahin foto. Kayak kamu lagi jajan, kamu lagi kelas, kamu lagi istirahat, kamu lagi apapun itu lah. Nah aku suka banget kalo kamu ceritain kegiatan yang sedang kamu lakuinn, gak akan pernah bosen aku denger nya, sekalipun kegiatan nya random, kalo kamu kabarin ke aku. Aku pasti sukaa
+
+3. Kalo kamu lagi manja sama akuu, kayak kamu tiba tiba pengen di peyuk pengen di pat pat, terus nanya "kamu sayang aku wupp". Aku bakal seneng banget menjawab atau merespon kalo kamu lakuin itu tadi.
+
+Masih banyak sih kalo di sebutin, tapi itu yang paling ku sukaa hehe.`;
+
+const finalFull = `Hmmm intinya dari semua ini. Aku merasa beruntung banget bisa ketemu kamu, bisa bareng sama kamu, bisa cerita bareng kamu, bisa lakuin banyak hal bareng kamuu, karna aku belum pernah dapetin semua ini sebelum sebelum nya😔. Baru kali ini aku bisa mencintai orang sedalam ini, dan sebaliknya aku juga merasa di cintai sama seseorang, yang seseorang nya tuh adalah kamu. Aku cuma mau berterimakasih sama kamu buat semua inii, jangan pernah cape sama akuu yaa, maafin aku kalo aku kadang lakuin hal yg bikin kamu sakit hari. Maaf juga kalo aku belum bisa jadi cowo yg terbaik buat kamu, belum bisa treat kamu seperti apa yg kamu mau, belum bisa ngertiin kamu, dan belum bisa lakuin semua yang kamu mauu. Tapi aku bakal usahain semua itu biar bisa penuhin semua ituu okeee, karna Aku sayang banget sama kamu hehe. trimakasih ya kamu dah hadir di hidup aku, dan mau nerima akuu. LOVE YOU SAYANGGG❤`;
+
+setTimeout(()=>type(aboutText,aboutTextFull),500);
+
+function openLeft(){
+ leftBox.classList.add('active');
+ type(leftText,leftFull);
+}
+function openRight(){
+ rightBox.classList.add('active');
+ type(rightText,rightFull);
+}
+function closeBox(){
+ leftBox.classList.remove('active');
+ rightBox.classList.remove('active');
+}
+
+setTimeout(()=>type(finalText,finalFull),500);
+</script>
+
+</body>
+</html>
